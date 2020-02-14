@@ -1,0 +1,26 @@
+body {
+     margin:0;
+     position:fixed;
+     top:0;
+     right:0;
+     bottom:0;
+     left:0;
+}
+
+canvas {
+    border: solid black 1px;
+    color: rgb(60, 68, 92)
+}
+
+.button {
+    position: relative;
+    border: solid 1px rgba(54, 165, 255, 0.671);
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    width: 120px;
+    height: 40px;
+    margin: 10px;
+
+}
