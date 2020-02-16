@@ -7,6 +7,10 @@ body {
      left:0;
 }
 
+#presentation {
+    width: 60%;
+}
+
 canvas {
     border: solid black 1px;
     color: rgb(60, 68, 92)
@@ -22,5 +26,4 @@ canvas {
     width: 120px;
     height: 40px;
     margin: 10px;
-
 }
