@@ -22,7 +22,8 @@ let buenosAires = "data/buenosAires_uni_1780_1800_bc.json"
 let dataset = buenosAires;
 
 // Color scale
-let color = d3.scaleOrdinal().range(d3.schemeSet3);
+// let color = d3.scaleOrdinal().range(d3.schemeSet3);
+let color = d3.scaleOrdinal().range(d3.schemeCategory20);
 
 // Force simulation initialization
 let simulation = d3.forceSimulation()
@@ -301,7 +302,7 @@ function drawing(graph){
                 d3.timeout(function(){
                     graph.nodes[i]["changing"] = false;
                     render();
-                }, intervalTime / 2)
+                }, intervalTime / 1.5)
             } else {
                 graph.nodes[i]["changing"] = false;
             }
@@ -314,7 +315,7 @@ function drawing(graph){
                 changeTs(1);
             }
             render();
-        }, intervalTime / 4)
+        }, intervalTime / 3)
 
         console.log("int ", interval)
     }
