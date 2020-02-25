@@ -1,10 +1,11 @@
 body {
-     margin:0;
-     position:fixed;
-     top:0;
-     right:0;
-     bottom:0;
-     left:0;
+    margin:0;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background: antiquewhite;
 }
 
 #presentation {
@@ -13,7 +14,8 @@ body {
 
 canvas {
     border: solid black 1px;
-    color: rgb(60, 68, 92)
+    /*color: rgb(60, 68, 92);*/
+    background: white;
 }
 
 .button {
@@ -26,4 +28,20 @@ canvas {
     width: 120px;
     height: 40px;
     margin: 10px;
+}
+
+.button-alg {
+    position: relative;
+    border: solid 1px black;
+    border-radius: 5px;
+    background-color: darkgray;
+    color: black;
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+}
+
+button:hover{
+    border: solid 3px firebrick;
 }

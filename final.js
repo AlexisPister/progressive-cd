@@ -2,13 +2,15 @@ var canvas = document.querySelector("canvas"),
     ctx = canvas.getContext("2d"),
     width = canvas.width,
     height = canvas.height,
-    radius = 3,
+    radius = 5,
     nodeIdsToDisplay = [],
     transform = d3.zoomIdentity,
     ts = 0;
 
 let miserables = "data/miserables.json";
-let buenosAires = "data/buenosAires.json";
+// let buenosAires = "data/buenosAires_unipartite_1750_1810_aggregated_10_biggest_cp.json";
+let buenosAires = "data/buenosAires_uni_1780_1820_bc.json"
+
 
 // TO CHANGE DATASET
 let dataset = miserables;
@@ -80,10 +82,6 @@ d3.json(dataset, function(graph){
             addTsToGraph(graph, communities.communities, map);
             document.querySelector("#animation").max = parseInt(document.querySelector("#animation").max) + 1
         })
-
-        // simulation.force("printAlpha", function(alpha){
-        //     console.log(alpha)
-        // })
         
         // connect nodes and links to the simulation
         simulation.nodes(graph.nodes);
