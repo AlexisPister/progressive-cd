@@ -3,12 +3,14 @@ var canvas = document.querySelector("canvas"),
     width = canvas.width,
     height = canvas.height,
     radius = 8,
-    strokeWidth = 2,
+    strokeWidth = 3,
     nodeIdsToDisplay = [],
     transform = d3.zoomIdentity,
     ts = 0;
 
-let intervalTime = 1500;
+let intervalTime = parseInt(document.querySelector("#animation-speed").value);
+// intervalTime = 1000;
+
 
 let miserables = "data/miserables.json";
 // let buenosAires = "data/buenosAires_unipartite_1750_1810_aggregated_10_biggest_cp.json";
@@ -60,19 +62,6 @@ d3.select("#animation-speed")
         intervalTime = animSpeed
     });
 
-d3.select("#button-layout")
-    .on("click", function(){
-        console.log("button");
-        simulation.force("communities", forceCommunities)
-        simulation.alpha(1).restart();
-
-        // Remove community force when the simulation end after layout button is clicked
-        simulation.on("end", function(){
-            simulation.force("communities", null);
-        })
-    })
-
-
 
 d3.json(dataset, function(graph){
     $(document).ready(function(){
@@ -97,10 +86,21 @@ d3.json(dataset, function(graph){
             .on('click', function(){
                 let algorithm = this.id
                 launchViz(algorithm)
+
+                d3.selectAll(".button-alg")
+                    .style("background", "darkgray")
+
+                d3.select("#" + algorithm)
+                    .style("background", "firebrick")
             })
 
 
         function launchViz(algorithm){
+            if (window.hasOwnProperty("interval")) {
+                console.log("stop anim")
+                interval.stop();
+            }
+
             loadJSON(dataset, function(json){
                 let data = json;
 
@@ -153,12 +153,26 @@ d3.json(dataset, function(graph){
 
 
 function drawing(graph){
+    changeTsAbs(0);
+
     d3.select("#animation")
         .on("input", function(){
             document.querySelector("#animation-span").textContent = this.value;
             ts = parseInt(this.value);
             render();
         });
+
+    d3.select("#button-layout")
+        .on("click", function(){
+            console.log("button");
+            simulation.force("communities", forceCommunities)
+            simulation.alpha(1).restart();
+
+            // Remove community force when the simulation end after layout button is clicked
+            simulation.on("end", function(){
+                simulation.force("communities", null);
+            })
+        })
 
     function findNeighbors(n_id){
         console.log(n_id)
@@ -238,6 +252,12 @@ function drawing(graph){
         document.querySelector("#animation-span").textContent = ts;
     }
 
+    function changeTsAbs(value){
+        ts = value;
+        document.querySelector("#animation").value = ts;
+        document.querySelector("#animation-span").textContent = ts;
+    }
+
     d3.select("#button-animation")
         .on("click", function(){
             // oneStepAnimation();
@@ -290,7 +310,9 @@ function drawing(graph){
 
         d3.timeout(function(){
             console.log('timer')
-            changeTs(1);
+            if (ts < N_times - 1) {
+                changeTs(1);
+            }
             render();
         }, intervalTime / 4)
 
@@ -298,13 +320,13 @@ function drawing(graph){
     }
 
     // Dragging
-/*    d3.select(canvas)
+    d3.select(canvas)
     .call(d3.drag()
     .container(canvas)
     .subject(dragsubject)
     .on("start", dragstarted)
     .on("drag", dragged)
-    .on("end", dragended));*/
+    .on("end", dragended));
 
     d3.select("canvas")
         .call(d3.zoom()
@@ -431,19 +453,12 @@ function drawLink(d) {
 function drawNode(d) {
     let r = radius;
     if (("changing" in d) & (d["changing"] == true)) {
-        r = parseInt(r + (r * 0.3));
+        r = parseInt(r + (r * 0.4));
     }
 
     ctx.beginPath();
     ctx.moveTo(d.x + r, d.y);
     ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
-
-
-
-    ctx.fillStyle = color(d.communities[ts])
-    if (nodeIdsToDisplay.includes(d.id)){
-        ctx.fillText(d.firstname + " " + d.lastname, d.x+10, d.y+3);
-    }
 
     if (("changing" in d) & (d["changing"] == true)) {
         // ctx.globalAlpha = 1;
@@ -454,8 +469,11 @@ function drawNode(d) {
         // ctx.globalAlpha = 0.5;
     }
 
-
+    ctx.fillStyle = color(d.communities[ts])
     ctx.fill()
 
-
+    if (nodeIdsToDisplay.includes(d.id)){
+        ctx.fillStyle = "black";
+        ctx.fillText(d.firstname + " " + d.lastname, d.x+10, d.y+3);
+    }
 }

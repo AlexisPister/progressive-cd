@@ -8,10 +8,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
-  <!-- <script src="fetchData.js"></script> -->
-<!--  <script src="fetchData.js"></script>-->
-
-
 </head>
 
 <body>
@@ -19,10 +15,47 @@
     <h1>Histo-CD</h1>
     <p>Communities</p>
   </header>
+      Histo-CD is a tool for the historians to visualize their <strong>historical social networks</strong>, and gain insight on their hidden <strong>community structure</strong>
 
-    <div id="presentation">
-      Histo-CD is a project to visualize the communities inside historical social networks. It would allow historians to quickly explore their data and gain insight about the communities formed by the people in the network. The visualization displays the social network in a node-link fashion, and the communities computed by an algorithm are encoded in the colors of the nodes.
-    </div> <br>
+    <div id="background">
+      <h2>Background</h2>
+      <p>Social networks are mathematical objects (graphs) that represent the <strong>social interactions</strong> of people in a given timeframe. They are constituted of nodes which represent the persons, which are linked together by edges. If an edge <strong>connects</strong> two nodes, it means that these people have a <strong>social relation</strong>strong> of some kind.</p>
+
+      <p>
+    Historians can build a lot of these social networks from archive's documents. However, it can be <strong>hard to interpret</strong> them without without a prior analysis, especially for non-experts. A lot of research is made on the problem of community detection, which is the task of finding groups of nodes which are densely connected together compared to the rest of the graph. It then allows to have a <strong>higher-level view</strong> of the social network, and analyse the groups instead of the persons directly.
+      </p>
+
+      <p>
+    One of the big problem of community detection is that <strong>there are no universal metric to say the a given community result is good or bad</strong>. A result can be good related to one evaluation and bad to another one. Moreover, historians often distrust computational tools and want to <strong>understand why an algorithm give a specific result</strong>, which is currently very often not the case
+      </p>
+
+    </div>
+
+    <div id="Aim">
+      <h2>Aim of the work</h2>
+      Histo-CD have two main goals :
+    <ol>
+      <li> <strong>Provide a social network exploratory tool</strong>, in which historians can import their data and explore the structure of the network to gain insight on the people and their social ties
+      <li> <strong>Give a interpretable visualisation of how the community detection algorithms works</strong>, showing all the steps of the algorithms preceding the final community structure result. At the end, the historians can explore the network with its final communities
+    </ol>
+    </div>
+
+    <div id="How">
+      <h2>How it works</h2>
+      <p>
+      Two communitiy detection algorithms are implemented : <strong>Greedy-modularity-search</strong> and <strong>Label-propagation</strong>. Both initialize each node with its unique community. The former algorithm merge the communities one by one if it increases the global modularity of the network. In the latter, at each step, each node change its community label with the one which is the more present among his neighbors.
+
+      Once the user choose one of the two algorithm by pressing the corresponding button, the network appears with the initialized communities. Dragging and zooming are implemented to allow the user to explore the data and some layout parameters are modifiable to have a better view.
+      </p>
+
+      The communities of each iteration of the algorithm are then accessible with the Iteration slider. Sometimes, if the community labels change too much, the button "Layout" allows to recompute the layout of the network given the new community structure. The "Animation button" start an animation which highlight the evolution of the community structure alongside the algorithm steps.
+
+      <p>
+        In this demo, the data is an historical social network of the people living in Buenos Aires in the XVIIIth century from 1780 to 1800. It has been built from marriage contracts.
+      </p>
+    </div>
+
+   <br>
 
 
   <button id='modularity' type="button" class=button-alg>
@@ -54,11 +87,9 @@
       </label>
       <label>
         Animation speed <span id="animation-speed-span">1000</span>
-        <input id="animation-speed" type="range" value="1000" min="200" step="50" max="3000">
+        <input id="animation-speed" type="range" value="800" min="200" step="50" max="3000">
       </label>
       <br>
-
-
 
 
       <button id='button-animation' type="button" class=button>
@@ -75,4 +106,17 @@
     <!-- <button id="send-button">Send</button> -->
 
     <script src="final2.js"></script>
+
+
+
+
+  <div id="improvments">
+    <h2>Future improvements</h2>
+    Some possible future improvements :
+    <ul>
+      <li> Adding new algorithms
+      <li> Compare the community results from the different algorithms
+      <li> Show some specificities of the algorithms in the visualisation : merging, cuts, evolution of metrics. Indeed, the current approach can be applied to every possible algorithm but does not give that much insight in the end. We believe it is the mean drawback of this project. Showing in more detail the processes if the algorithm could possibly improve this.
+    </ul>
+  </div>
 </body>

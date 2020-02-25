@@ -21,7 +21,6 @@
 
 let DATA;
 
-
 function loadJSON(path, callback) {
     // function to load local json file
     var xobj = new XMLHttpRequest();
